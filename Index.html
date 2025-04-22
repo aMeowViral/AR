@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Guía AR con Marcador</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+    <title>App Web AR con A-Frame</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.4.2/aframe/build/aframe-ar.min.js"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+      #loading { position: absolute; top: 10px; left: 10px; color: white; font-family: sans-serif; }
+    </style>
   </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs vr-mode-ui="enabled: false">
-      
-      <!-- Marcador personalizado -->
-      <a-marker
-        type="pattern"
-        url="markers/miMarcador1.patt">
-        <a-box position="0 0.5 0" material="color: red;"></a-box>
+  <body>
+    <div id="loading">Cargando cámara...</div>
+
+    <a-scene embedded arjs="sourceType: webcam;">
+      <!-- Marcador tipo Hiro -->
+      <a-marker preset="hiro">
+        <!-- Modelo simple (cubo rojo) -->
+        <a-box position="0 0.5 0" color="red"></a-box>
       </a-marker>
-      
+
+      <!-- Cámara -->
       <a-entity camera></a-entity>
     </a-scene>
+
+    <script>
+      window.addEventListener('arjs-video-loaded', () => {
+        document.getElementById('loading').style.display = 'none';
+      });
+    </script>
   </body>
 </html>
